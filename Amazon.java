@@ -1,73 +1,139 @@
 import java.util.*;
 
-class UserList
+class Addtocart
+{
+    String productname = "";
+    String productid = "";
+    String userid = "";
+    String productprice = "";
+
+    Addtocart (String productname,String productid,String userid,String productprice)
+    {
+        this.productname = productname;
+        this.productid = productid;
+        this.userid = userid;
+        this.productprice = productprice;
+    }
+}
+class OrderHistory 
+{
+    String userid = "";
+    String productid = "";
+    String productname = "";
+    String productprice = "";
+
+    OrderHistory (String productname,String productid,String userid,String productprice)
+    {
+        this.productname = productname;
+        this.productid = productid;
+        this.userid = userid;
+        this.productprice = productprice;
+    }
+}
+class User
 {
     String name = "";
     String password = "";
-    UserList(String name,String password)
+    String walletbalance = "";
+    String userid = "";
+
+    User(String name,String password,String walletbalance,String userid)
     {
         this.name = name;
         this.password = password;
+        this.walletbalance = walletbalance;
+        this.userid = userid;
     }
 }
-class NewMerchantListToApprove
+class Merchantapproval
 {
-    String name;
-    String password;
-    String product;
-    String dateofbirth;
-    NewMerchantListToApprove (String name,String password,String product,String dateofbirth)
+    String name = "";
+    String productcategory = "";
+    String password = "";
+    String merchantid = "";
+    String productname = "";
+    String productid = "";
+    String productprice = "";
+    String quantity = "";
+    String discount = "";
+
+    Merchantapproval(String name, String productcategory, String password, String merchantid, String productname, String productid, String productprice, String quantity, String discount)
     {
         this.name = name;
+        this.productcategory = productcategory;
         this.password = password;
-        this.product = product;
-        this.dateofbirth = dateofbirth;
+        this.merchantid = merchantid;
+        this.productname = productname;
+        this.productid = productid;
+        this.productprice = productprice;
+        this.quantity = quantity;
+        this.discount = discount;
     }
 }
-class MerchantList
+class Merchant
 {
-    String name;
-    String password;
-    String product;
-    String dateofbirth;
-    public MerchantList(String name,String password,String product,String dateofbirth)
+    String name = "";
+    String password = "";
+    String productcategory = "";
+    String merchantid = "";
+    String productname = "";
+    Merchant(String name,String password,String productcategory, String merchantid, String productname)
     {
         this.name = name;
         this.password = password;
-        this.product = product;
-        this.dateofbirth = dateofbirth;
+        this.productcategory = productcategory;
+        this.merchantid = merchantid;
+        this.productname  = productname;
     }
 }
-class ApproveList
+class Product
 {
-    String name;
-    String password;
-    String product;
-    ApproveList(String name, String password, String product)
+    String merchantid = "";
+    String productcategory = "";
+    String productid = "";
+    String productname = "";
+    String productprice = "";
+    String quantity = "";
+    String discount = "";
+    String sold = "";
+
+    Product (String merchantid, String productcategory, String productid, String productname, String productprice, String quantity, String discount, String sold)
     {
-        this.name = name;
-        this.password = password;
-        this.product = product;
+        this.merchantid = merchantid;
+        this.productcategory = productcategory;
+        this.productid = productid;
+        this.productname = productname;
+        this.productprice = productprice;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.sold = sold;
     }
 }
 class Amazon
 {
-    static ArrayList <UserList> us = new ArrayList <> ();
-    static ArrayList <MerchantList> ml = new ArrayList <> ();
-    static ArrayList <NewMerchantListToApprove> al = new ArrayList <> ();
-    static Scanner s = new Scanner(System.in);
-    static int n = 0 ,approvalcount = 2, flag = 1;
-    static String mn = "",mp = "",pn = "" , dob = "" , adminpassword = "ad",adminsecetcode = "saidc12";
-    
+    static Scanner s = new Scanner (System.in);
+    static ArrayList <Merchant> mer = new ArrayList <> ();
+    static ArrayList <Product> pro = new ArrayList <> ();
+    static ArrayList <Merchantapproval> merapp = new ArrayList <> ();
+    static ArrayList <User> user = new ArrayList <> ();
+    static ArrayList <Addtocart> addtocart = new ArrayList <>();
+    static ArrayList <OrderHistory> orderhistory = new ArrayList <>();
+    static ArrayList <String> procat = new ArrayList <> ();
+    static int choicenumber = 0,c = 0,position = 0,proidindex = 0,useridindex = 0,dd = 0,amount = 0;
+    static String name = "",password = "",npassword = "",procatname = "",proname = "",quantity = "",discount = "",productid = "",proprice = "",balance = "";
     static void mainpage()
     {
-        System.out.println("1.Admin login");
-        System.out.println("2.User login");
-        System.out.println("3.Merchant login");
-        System.out.println("4.Exit");
-        System.out.print("Enter your choice : "); 
-        n = s.nextInt();
-        switch(n)
+        clear();
+        System.out.println ("        Welcome to Amazon");
+        System.out.println ();
+        System.out.println ("1. Admin Login");
+        System.out.println ("2. Merchant Login");
+        System.out.println ("3. User Login");
+        System.out.println();
+        System.out.print("Enter your choice : ");
+        choicenumber = s.nextInt();
+        
+        switch (choicenumber)
         {
             case 1:
             {
@@ -75,326 +141,52 @@ class Amazon
                 break;
             }
             case 2:
-            {
-                customerlogin();
-                break;
-            }
-            case 3:
             {
                 merchantlogin();
                 break;
             }
-            case 4:
-            {
-                System.exit(0);
-                break;
-            }
-            default:
-            {
-                System.out.println("Invalid input");
-                System.out.println("Press enter to continue");
-                s.nextLine();
-                s.nextLine();
-                mainpage();
-            }
-        }
-    }
-    static void adminlogin()
-    {
-        String aname = "";
-        String apass = "";
-        System.out.println("Admin Login");
-        System.out.print("Enter name : ");
-        aname = s.next();
-        System.out.print("Enter password : ");
-        apass = s.next();
-        if (aname.equals("Admin") && apass.equals(adminpassword))
-        {
-            adminmain();
-        }
-        else
-        {
-            System.out.println("Incorrect password or user name");
-            System.out.println("Press enter to continue");
-            s.nextLine();
-            s.nextLine();
-            backtoadminlogin();
-        }
-    }
-    static void changeadminpassword()
-    {
-        System.out.print("Enter admin name : ");
-        mn = s.next();
-        System.out.print("Enter produt developer and admin name with code : ");
-        mp = s.next();
-        if (mp.equals(adminsecetcode))
-        {
-            System.out.print("Type your new password : ");
-            adminpassword = s.next();
-            System.out.println("Pasword changed successfully");
-            System.out.println("Press enter to continue");
-            s.nextLine();
-            s.nextLine();
-            adminlogin();
-        }
-        else
-        {
-            System.out.println("Invalid code");
-            System.out.print("Press enter to continue");
-            s.nextLine();
-            s.nextLine();
-            backtochangeadminpassword();
-        }
-    }
-    static void backtochangeadminpassword()
-    {
-        System.out.println("Press 1 to try again");
-        System.out.println("Press 0 adminlogin");
-        System.out.println("Enter your choice : ");
-        n = s.nextInt();
-        if (n == 1) 
-        {
-            changeadminpassword(); 
-        }
-        else if (n == 0) 
-        {
-            adminlogin();
-        }
-        else 
-        {
-            System.out.println("Invalid input to proceed");
-            System.out.print("Press enter to continue");
-            s.next();
-            s.next();
-            backtochangeadminpassword();
-        }
-    }
-    static void adminmain()
-    {
-        System.out.println("1.Show merchant List");
-        System.out.println("2.Approve");
-        System.out.println("3.Remove Merchant");
-        System.out.println("4.Exit");
-        System.out.print("Enter your choice : ");
-        n = s.nextInt();
-        switch(n) 
-        {
-            case 1:
-            {
-                showmerchantlist();
-                break;
-            }
-            case 2:
-            {
-                approval();
-                break;
-            }
             case 3:
             {
-                removemerchant();
-                break;
-            }
-            case 4:
-            {
-                mainpage();
-                break;
-            }
-            default:
-            {
-                System.out.println("Enter valid input");
-                adminmain();
-            }
-        }
-    }
-    static void backtoadminlogin()
-    {
-        System.out.println("If you forgot password");
-        System.out.println("Press 1 to change it");
-        System.out.println("Press 0 to try again");
-        System.out.println("Enter your choice : ");
-        n = s.nextInt();
-        switch (n)
-        {
-            case 0:
-            {
-                adminlogin();
-                break;
-            }
-            case 1:
-            {
-                changeadminpassword();
+                userlogin();
                 break;
             }
             default:
             {
                 System.out.println("Invalid input");
-                System.out.println("Press enter to continue");
-                s.nextLine();
-                s.nextLine();
-                backtoadminlogin();
-            }
-        }
-    }
-    static void showmerchantlist()
-    {
-        System.out.println("Merchant name        Product");
-        for (int i = 0 ; i<ml.size() ; i++)
-        {
-            System.out.println(i+1+". "+ml.get(i).name + "         " + ml.get(i).product);
-        }
-        System.out.println("Press enter to continue");
-        //System.out.println();
-        s.nextLine();
-        s.nextLine();
-        adminmain();
-    }
-    static void approval()
-    {
-        if (al.size() > 0)
-        {
-            for (int i = 0 ; i <al.size() ; i++)
-            {
-                System.out.println(al.get(i).name + " " + al.get(i).product);
-                System.out.println("Enter 1 for approval or 0 for rejection");
-                approvalcount = s.nextInt();
-                if (approvalcount == 1)
-                {
-                    String hname = al.get(i).name;
-                    String hpassword = al.get(i).password;
-                    String hproduct = al.get(i).product;
-                    String hdob = al.get(i).dateofbirth;
-                    //ml.add(hname,hpassword,hproduct);
-                    ml.add(new MerchantList(hname,hpassword,hproduct,hdob));
-                    //ml.add(new MerchantList(al.get(i)));
-                    al.remove(i);
-                    approval();
-                }
-                else
-                {
-                    al.remove(i);
-                    approval();
-                }
-            }
-        }
-        else
-        {
-            System.out.println("Nothing to give approval");
-            System.out.print("Press enter to continue");
-            s.nextLine();
-            s.nextLine();
-            adminmain();
-        }
-    }
-    static void removemerchant()
-    {
-        System.out.print("Enter the Merchant name to be removed : ");
-        mn = s.next();
-        for (int i = 0 ; i<ml.size() ; i++)
-        {
-            if (mn.equals(ml.get(i).name))
-            {
-                ml.remove(i);
-                System.out.println("Merchant removed successfully");
-                System.out.print("Press Enter to continue");
-                s.nextLine();
-                s.nextLine();
-                backtoremovemerchantagain();
-                break;
-            }
-        }
-    }
-    static void backtoremovemerchantagain()
-    {
-        System.out.println("Press 1 to remove anothor user");
-        System.out.println("Press 0 to exit");
-        System.out.print("Enter your choice : ");
-        n = s.nextInt();
-        switch (n)
-        {
-            case 0:
-            {
-                adminmain();
-                break;
-            }
-            case 1:
-            {
-                removemerchant();
-                break;
-            }
-            default:
-            {
-                System.out.println(n + "is not a valid option");
                 System.out.println();
-                System.out.println("Enter valid option");
                 System.out.print("Press enter to continue");
                 s.nextLine();
                 s.nextLine();
-                backtoremovemerchantagain();
+                clear();
+                merchantlogin();
             }
         }
     }
     static void userlogin()
     {
-        System.out.println("User Login");
-        System.out.print("Enter your name : ");
-        mn = s.next();
-        System.out.print("Enter your password : ");
-        mp = s.next();
-        for (int i = 0 ; i<us.size() ; i++)
+        clear();
+        System.out.println("                 User Login");
+        System.out.println();
+        System.out.println("1. New User");
+        System.out.println("2. Existing  User");
+        System.out.println("3. Home");
+        System.out.println();
+        System.out.print("Enter your choice : ");
+        choicenumber = s.nextInt();
+
+        switch (choicenumber)
         {
-            if (us.get(i).name.equals(mn) && us.get(i).password.equals(mp))
+            case 1: 
             {
-                System.out.println("Logged in successfully");
-                System.out.println("Welcome back "+ us.get(i).name + " !");
-                System.out.print("Enter product name you are looking for ");
-                s.nextLine();
-                s.nextLine();
+                newuser();
                 break;
             }
-            else if (us.get(i).name.equals(mn) && !us.get(i).password.equals(mp))
+            case 2: 
             {
-                System.out.println("Password is incorrect");
-                System.out.print("Press enter to continue");
-                s.next();
-                s.next();
-                System.out.println("To try once again");
-                System.out.print("Press enter to continue");
-                s.next();
-                s.next();
-                userlogin();
+                existinguserlogin();
                 break;
             }
-            else 
-            {
-                System.out.println("User does not exist");
-                System.out.print("Press enter to continue");
-                s.next();
-                s.next();
-                customerlogin();
-            }
-        }
-    }
-    static void customerlogin()
-    {
-        System.out.println("Customer Login");
-        System.out.println("1.Login");
-        System.out.println("2.Sign up");
-        System.out.println("3.Exit");
-        System.out.println("Enter your choice : ");
-        n = s.nextInt();
-        switch(n)
-        {
-            case 1:
-            {
-                userlogin();
-                break;
-            }
-            case 2:
-            {
-                //usersignup();
-                break;
-            }
-            case 3:
+            case 3: 
             {
                 mainpage();
                 break;
@@ -402,31 +194,524 @@ class Amazon
             default:
             {
                 System.out.println("Invalid input");
-                System.out.println("Press enter to continue");
+                System.out.println();
+                System.out.print("Press enter to continue");
                 s.nextLine();
                 s.nextLine();
-                merchantlogin();
+                clear();
+                userlogin();
             }
         }
+    }
+    static void existinguserlogin()
+    {
+        clear();
+        System.out.println("                Existing User");
+        System.out.println();
+        System.out.print("Enter your name     : ");
+        name = s.next();
+        System.out.print("Enter your password : ");
+        password = s.next();
+
+        for(int i = 0 ; i<user.size() ; i++)
+        {
+            if ((user.get(i).name).equals(name) && (user.get(i).password).equals(password))
+            {
+                c = 1;
+                useridindex = i;
+                existinguseroptions();
+                break;
+            }
+        }
+        if (c == 0)
+        {
+            System.out.println("Name or Password is incorrect");
+            System.out.println("Press enter to continue");
+            s.nextLine();
+            s.nextLine();
+            existinguserlogin();
+        }
+
+    }
+    static void existinguseroptions()
+    {
+        clear();
+        System.out.println("                Welcome "+name);
+        System.out.println();
+        System.out.println("1. Shopping");
+        System.out.println("2. Your cart");
+        System.out.println("3. Order History");
+        System.out.println("4. Wallet");
+        System.out.println("5. Password change");
+        System.out.println("6. Home");
+        System.out.println();
+        System.out.print("Enter your choice : ");
+        choicenumber = s.nextInt();
+
+        switch (choicenumber)
+        {
+            case 1:
+            {
+                shopping();
+                break;
+            }
+            case 2:
+            {
+                yourcart();
+                break;
+            }
+            case 3:
+            {
+                orderhistory();
+                break;
+            }
+            case 4:
+            {
+                wallet();
+                break;
+            }
+            case 5:
+            {
+                userpasswordchange();
+                break;
+            }
+            case 6:
+            {
+                mainpage();
+                break;
+            }
+            default:
+            {
+                System.out.println("Invalid input");
+                System.out.println();
+                System.out.print("Press enter to continue");
+                s.nextLine();
+                s.nextLine();
+                clear();
+                existinguseroptions();
+            }
+        }
+    }
+    static void userpasswordchange()
+    {
+        System.out.println("              Change pasword");
+        System.out.println();
+        System.out.print("Enter new password : ");
+        password = s.next();
+        System.out.print("Re-type your new password to confirm : ");
+        npassword = s.next();
+        if (password.equals(npassword))
+        {
+            user.get(useridindex).password = npassword;
+            System.out.println("Password changed sucessfully");
+        }
+        else
+        {
+            System.out.println("Password and Confirm password mismached");
+            System.out.println();
+            System.out.print("Press enter to continue");
+            s.nextLine();
+            s.nextLine();
+            System.out.println("Password not changed");
+        }
+        System.out.println();
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        existinguseroptions();
+    }
+    static void wallet()
+    {
+        clear();
+        System.out.println("                 Wallet");
+        System.out.println();
+        System.out.println("         Wallet balance : "+user.get(useridindex).walletbalance);
+        System.out.println();
+        System.out.println("1. Add cash");
+        System.out.println("2. Home");
+        System.out.print("Enter your choice : ");
+        choicenumber = s.nextInt();
+
+        switch (choicenumber)
+        {
+            case 1:
+            {
+                addcash();
+                break;
+            }
+            case 2:
+            {
+                existinguseroptions();
+                break;
+            }
+            default:
+            {
+                System.out.println("Invalid input");
+                System.out.println();
+                System.out.print("Press enter to continue");
+                s.nextLine();
+                s.nextLine();
+                clear();
+                wallet();
+            }
+        }
+    }
+    static void addcash()
+    {
+        clear();
+        System.out.println("          Add cash");
+        System.out.println();
+        System.out.print("Enter cash to be added : ");
+        balance = s.next();
+        
+        user.get(useridindex).walletbalance = String.valueOf((Integer.parseInt(user.get(useridindex).walletbalance))+(Integer.parseInt(balance)));
+        System.out.println();
+        System.out.println("Cash added successfully");
+        System.out.println();
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        wallet();
+    }
+    static void orderhistory()
+    {
+        clear();
+        c = 0;
+        System.out.println("                    Your Order History");
+        System.out.println();
+        for (int i = 0 ; i<orderhistory.size() ; i++)
+        {
+            if ((orderhistory.get(i).userid).equals(user.get(useridindex).userid))
+            {
+                c = 1;
+                System.out.println("Product ID    : "+orderhistory.get(i).productid);
+                System.out.println("Product name  : "+orderhistory.get(i).productname);
+                System.out.println("Product Price : "+orderhistory.get(i).productprice);
+                for (int j = 0 ; j<pro.size() ; j++)
+                {
+                    if ((pro.get(j).productid).equals(orderhistory.get(i).productid))
+                    {
+                        if ((Integer.parseInt(pro.get(j).quantity))>0)
+                        {
+                            System.out.println("In Stock");
+                            System.out.println("-------------------------------------");
+                        }
+                        else
+                        {
+                            System.out.println("No Stock");
+                            System.out.println("-------------------------------------");
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println();
+        if (c == 1)
+        {
+            System.out.println("Enter 1 to buy or 0 to back");
+            choicenumber = s.nextInt();
+            if (choicenumber == 1)
+            {
+                shopping();
+            }
+            else
+            {
+                existinguseroptions();
+            }
+        }
+        else
+        {
+            System.out.println("You have ordered nothing");
+            System.out.println();
+            System.out.print("Press enter to continue");
+            s.nextLine();
+            s.nextLine();
+            existinguseroptions();
+        }
+    }
+    static void yourcart()
+    {
+        clear();
+        c = 0;
+        System.out.println("                Your Cart");
+        System.out.println();
+        for (int i = 0 ; i<addtocart.size() ; i++)
+        {
+            if ((addtocart.get(i).userid).equals(user.get(useridindex).userid))
+            {
+                c = 1;
+                System.out.println("Product ID    : "+addtocart.get(i).productid);;
+                System.out.println("Product Name  : "+addtocart.get(i).productname);
+                System.out.println("Product Price : "+addtocart.get(i).productprice);
+                for (int j = 0 ; j<pro.size() ; j++)
+                {
+                    if ((pro.get(j).productid).equals(addtocart.get(i).productid))
+                    {
+                        if ((Integer.parseInt(pro.get(j).quantity))>0)
+                        {
+                            System.out.println("In Stock");
+                            System.out.println("-------------------------------------");
+                        }
+                        else
+                        {
+                            System.out.println("No Stock");
+                            System.out.println("-------------------------------------");
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println();
+        if (c == 1)
+        {
+            System.out.println("Enter 1 to buy or 0 to back");
+            choicenumber = s.nextInt();
+            if (choicenumber == 1)
+            {
+                shopping();
+            }
+            else
+            {
+                existinguseroptions();
+            }
+        }
+        else
+        {
+            System.out.println("Your cart is empty");
+            System.out.println();
+            System.out.print("Press enter to continue");
+            s.nextLine();
+            s.nextLine();
+            existingmerchantoptions();
+        }
+    }
+    static void shopping()
+    {
+        clear();
+        System.out.println("                  Products are waiting for you "+name);
+        System.out.println();
+        position = 1;
+        for (int i = 0 ; i<procat.size() ; i++)
+        {
+            System.out.println(position + ". "+procat.get(i));
+            position++;
+        }
+        System.out.println(position + ". Home");
+        System.out.println();
+        System.out.print("Enter your choice : ");
+        choicenumber = s.nextInt();
+        if (choicenumber<position)
+        {
+            userproductlist();
+        }
+        else if (choicenumber == position)
+        {
+            mainpage();
+        }
+        else
+        {
+            System.out.println("Invalid input");
+            System.out.println();
+            System.out.print("Press enter to continue");
+            s.nextLine();
+            s.nextLine();
+            shopping();
+        }
+    }
+    static void userproductlist()
+    {
+        clear();
+        c = 0;
+        for (int i = 0 ; i<pro.size() ; i++)
+        {
+            if((procat.get(choicenumber-1)).equals(pro.get(i).productcategory) && (Integer.parseInt(pro.get(i).quantity)>0))
+            {
+                c = 1;
+                System.out.println ("Product Category : " + pro.get(i).productcategory);
+                System.out.println ("Product Name     : " + pro.get(i).productname);
+                System.out.println ("Product Price    : " + pro.get(i).productprice);
+                System.out.println ("Product ID       : " + pro.get(i).productid);
+                System.out.println ("Product Quantity : " + pro.get(i).quantity);
+                System.out.println ("Product Discount : " + pro.get(i).discount);
+                System.out.println ("------------------------------------------------------");
+                System.out.println();
+            }
+            else
+            {
+                nostock();
+            }
+        }
+        if (c == 1)
+        {
+            System.out.println();
+            System.out.print("Enter Product ID : ");
+            productid = s.next();
+            for (int i = 0 ; i<pro.size() ; i++)
+            {
+                if ((pro.get(i).productid).equals(productid))
+                {
+                    proidindex = i;
+                    System.out.println("              Your required product details");
+                    System.out.println();
+                    System.out.println ("Product Category : " + pro.get(proidindex).productcategory);
+                    System.out.println ("Product Name     : " + pro.get(proidindex).productname);
+                    System.out.println ("Product Price    : " + pro.get(proidindex).productprice);
+                    System.out.println ("Product ID       : " + pro.get(proidindex).productid);
+                    System.out.println ("Product Quantity : " + pro.get(proidindex).quantity);
+                    System.out.println ("Product Discount : " + pro.get(proidindex).discount);
+                    System.out.println ("------------------------------------------------------");
+                    System.out.println();
+                    userproductdo();
+                    break;
+                }
+            }
+        }
+    }
+    static void nostock()
+    {
+        System.out.println("Currently no stock in your required product");
+        System.out.println();
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        existinguseroptions();
+    }
+    static void userproductdo()
+    {
+        System.out.println("1. Add to cart");
+        System.out.println("2. Buy");
+        System.out.println("3. Back");
+        System.out.println();
+        System.out.print("Enter your choice : ");
+        choicenumber = s.nextInt();
+        switch(choicenumber)
+        {
+            case 1:
+            {
+                addtocart();
+                break;
+            }
+            case 2:
+            {
+                buy();
+                break;
+            }
+            case 3:
+            {
+                shopping();
+                break;
+            }
+            default:
+            {
+                System.out.println("Invalid input");
+                System.out.println();
+                System.out.print("Press enter to continue");
+                s.nextLine();
+                s.nextLine();
+                userproductdo();
+            }
+        }
+    }
+    static void buy()
+    {
+        clear();
+        amount = Integer.parseInt(pro.get(proidindex).productprice);
+        dd = Integer.parseInt(pro.get(proidindex).discount);
+        c = 0;
+        if (dd>0)
+        {
+            int z = dd*(Integer.parseInt(pro.get(proidindex).productprice));
+            amount = amount - (z/100);
+            System.out.println("You saved : " + (z/100));
+        }
+        if (Integer.parseInt(user.get(useridindex).walletbalance)>=amount)
+        {
+            System.out.println("Amount to be paid : "+ amount);
+            c = 1;
+            System.out.println();
+            System.out.println("Press enter 1 to place your order or 0 to cancel");
+            System.out.println();
+            choicenumber = s.nextInt();
+            System.out.println();
+            if (choicenumber == 1)
+            {
+                System.out.println("Your order placed successfully");
+                pro.get(proidindex).quantity = String.valueOf(Integer.valueOf(pro.get(proidindex).quantity)-1);
+                pro.get(proidindex).sold = String.valueOf(Integer.valueOf(pro.get(proidindex).sold)+1);
+                user.get(useridindex).walletbalance = String.valueOf(Integer.valueOf(user.get(useridindex).walletbalance)-amount);
+                orderhistory.add(new OrderHistory(pro.get(proidindex).productname,pro.get(proidindex).productid,user.get(useridindex).userid,pro.get(proidindex).productprice));
+            }
+            else
+            {
+                System.out.println("Your order not placed");
+            }
+        }
+        else
+        {
+            System.out.println("Insufficient funds in your wallet");
+        }
+        System.out.println();
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        existinguseroptions();
+    }
+    static void addtocart()
+    {
+        addtocart.add(new Addtocart(pro.get(proidindex).productname,pro.get(proidindex).productid,user.get(useridindex).userid,pro.get(proidindex).productprice));
+        System.out.println("Product added to Your cart");
+        System.out.println();
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        existinguseroptions();
+    }
+    static void newuser()
+    {
+        clear();
+        System.out.println("                New User");
+        System.out.println();
+        System.out.print("Enter your name          : ");
+        name = s.next();
+        System.out.print("Create your password     : ");
+        password = s.next();
+        System.out.print("Enter amount to be added : ");
+        balance = s.next();
+        user.add(new User (name,password,balance,"u00"+String.valueOf(user.size()+1)));
+        System.out.println();
+        System.out.println("Your account created successfully and your id is u00" +String.valueOf(user.size()));
+        System.out.println();
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        userlogin();
+    }
+    static void clear()
+    {
+        System.out.print("\033[H\033[2J");  
+        System.out.flush();
     }
     static void merchantlogin()
     {
-        System.out.println("Merchant Login");
-        System.out.println("1.New Merchant");
-        System.out.println("2.Existing Merchant");
-        System.out.println("3.Exit");
+        clear();
+        System.out.println("            Merchant Login");
+        System.out.println();
+        System.out.println("1. New Merchant");
+        System.out.println("2. Existing Merchant");
+        System.out.println("3. Home");
+        System.out.println();
         System.out.print("Enter your choice : ");
-        n = s.nextInt();
-        switch(n)
+        choicenumber = s.nextInt();
+        switch (choicenumber)
         {
             case 1:
             {
-                addmerchant();
+                newmerchant();
                 break;
             }
             case 2:
             {
-                existingmerchant();
+                existingmerchantlogin();
                 break;
             }
             case 3:
@@ -437,74 +722,464 @@ class Amazon
             default:
             {
                 System.out.println("Invalid input");
-                System.out.println("Press enter to continue");
+                System.out.println();
+                System.out.print("Press enter to continue");
                 s.nextLine();
                 s.nextLine();
+                clear();
                 merchantlogin();
             }
         }
     }
-    static void addmerchant()
+    static void existingmerchantlogin()
     {
-        System.out.println("Add Merchant");
-        System.out.print("Enter name : ");
-        mn = s.next();
-        System.out.print("Create your password : ");
-        mp = s.next();
-        System.out.print("Enter product name : ");
-        pn = s.next();
-        System.out.println("Enter your product lanuched date in ddmmyyyy format ");
-        System.out.println("For example : If product launched date id 12/11/2001");
-        System.out.println("Then enter date as 12112001");
-        System.out.print("Enter your product lanuched date :");
-        pn = s.next();
-        al.add(new NewMerchantListToApprove(mn,mp,pn,dob));
-        System.out.println("Your request for adding account is Sucess and it will get approved soon");
-        System.out.println("Press enter to continue");
-        s.nextLine();
-        s.nextLine();
-        adminmain();
-    }
-    static void existingmerchant()
-    {
-        System.out.println("Existing Merchant Login");
-        System.out.print("Enter Merchant name : ");
-        mn = s.next();
-        System.out.print("Enter your password : ");
-        mp = s.next();
-        for (int i = 0 ; i<ml.size() ; i++)
+        clear();
+        System.out.println("                Existing Merchant");
+        System.out.println();
+        System.out.print("Enter your name : ");
+        name = s.next();
+        System.out.print("Enter your password :");
+        password = s.next();
+
+        for(int i = 0 ; i<mer.size() ; i++)
         {
-            if (ml.get(i).name.equals(mn) && ml.get(i).password.equals(mp))
+            if ((mer.get(i).name).equals(name) && (mer.get(i).password).equals(password))
             {
-                flag = 0;
-                System.out.println("Logged in successfully");
-                System.out.println("Your product is "+ml.get(i).product);
-                System.out.println("Press Enter to continue");
+                proidindex = 1;
+                position = i;
+                existingmerchantoptions();
+            }
+        }
+        if (proidindex == 0)
+        {
+            System.out.println("Name or Password is incorrect");
+            System.out.println("Press enter to continue");
+            s.nextLine();
+            s.nextLine();
+            existingmerchantlogin();
+        }
+
+    }
+    static void existingmerchantoptions()
+    {
+        clear();
+        System.out.println("              Welcome "+name);
+        System.out.println();
+        System.out.println("1. Add product");
+        System.out.println("2. List My Product");
+        System.out.println("3. Edit Product");
+        System.out.println("4. Remove Product");
+        System.out.println("5. View most sold product");
+        System.out.println("6. View sales report");
+        System.out.println("7. Home");
+        System.out.println();
+        System.out.print("Enter your choice : ");
+        choicenumber = s.nextInt();
+
+        switch (choicenumber)
+        {
+            case 1:
+            {
+                addproduct();
+                break;
+            }
+            case 2:
+            {
+                listmyproduct();
+                break;
+            }
+            case 3:
+            {
+                editproduct();
+                break;
+            }
+            case 4:
+            {
+                removeproduct();
+                break;
+            }
+            case 5:
+            {
+                //viewmostsoldproduct();
+                break;
+            }
+            case 6:
+            {
+                //viewsalesreport();
+                break;
+            }
+            case 7:
+            {
+                mainpage();
+                break;
+            }
+            default:
+            {
+                System.out.println("Invalid input");
+                System.out.println();
+                System.out.print("Press enter to continue");
                 s.nextLine();
                 s.nextLine();
+                existingmerchantoptions();
+            }
+        }
+    }
+    static void removeproduct()
+    {
+        clear();
+        System.out.println("              Remove Product" );
+        System.out.println();
+        System.out.print("Enter product id : ");
+        productid = s.next();
+        System.out.println();
+        proidindex = 0;
+        for (int i = 0 ; i<pro.size() ; i++)
+        {
+            if ((pro.get(i).productid).equals(productid))
+            {
+                proidindex = 1;
+                pro.remove(i);
+                System.out.println("Product removed successfully");
                 break;
             }
         }
-        if (flag == 1)
+        if (proidindex == 0)
         {
-            System.out.println("User does not exist");
-            System.out.print("Press enter to continue");
-            s.next();
-            s.next();
-            merchantlogin();
+            System.out.println("Product not found");
         }
-        mainpage();
+        System.out.println();
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        existingmerchantoptions();
+    }
+    static void editproduct()
+    {
+        clear();
+        System.out.println("              Edit Product" );
+        System.out.println();
+        System.out.print("Enter product id : ");
+        productid = s.next();
+        proidindex = 0;
+        for (int i = 0 ; i<pro.size() ; i++)
+        {
+            if ((pro.get(i).productid).equals(productid))
+            {
+                proidindex = 1;
+                System.out.println("Product name is " + pro.get(i).productname);
+                System.out.println();
+                System.out.println("Product price is " + pro.get(i).productprice);
+                System.out.print("Enter new product price    : ");
+                pro.get(i).productprice = s.next();
+                System.out.println();
+                System.out.println("Product quantity is " + pro.get(i).quantity);
+                System.out.print("Enter new product quantity : " );
+                pro.get(i).quantity = s.next();
+                System.out.println();
+                System.out.println("Product discount is " + pro.get(i).discount);
+                System.out.print("Enter new product discount : " );
+                pro.get(i).discount = s.next();
+                System.out.println("Changes made successfully");
+                break;
+            }
+        }
+        if (proidindex == 0)
+        {
+            System.out.println("Product not found");
+        }
+        System.out.println();
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        existingmerchantoptions();
+    }
+    static void listmyproduct()
+    {
+        clear();
+        System.out.println("                Your Product List");
+        c = 1;
+        for (int i = 0 ; i<pro.size() ; i++)
+        {
+            if ((pro.get(i).merchantid).equals(mer.get(position).merchantid))
+            {
+                System.out.println(c + ". Product Name : "+ pro.get(i).productname);
+                System.out.println("   Product ID : "+pro.get(i).productid);
+                c++;
+                choicenumber = 1;
+            }
+        }
+        if (choicenumber == 0)
+        {
+            System.out.println("No products found");
+        }
+        System.out.println();
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        existingmerchantoptions();
+    }
+    static void addproduct()
+    {
+        clear();
+        System.out.println("             Add Product");
+        System.out.println();
+        System.out.print("Enter product category : ");
+        procatname = s.next();
+        System.out.print("Enter product name     : ");
+        proname = s.next();
+        System.out.println("Enter product price : ");
+        proprice = s.next();
+        System.out.print("Enter product Quantity : ");
+        quantity = s.next();
+        System.out.print("Enter product discount : ");
+        discount = s.next();
+        pro.add(new Product(mer.get(position).merchantid,procatname,"ama00"+String.valueOf(pro.size()+1),proname,proprice,quantity,discount,"0"));
+        System.out.println();
+        System.out.println("Product added successfully");
+        System.out.println();
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        existingmerchantoptions();
+    }
+    static void newmerchant()
+    {
+        clear();
+        System.out.println("                New Merchant");
+        System.out.println();
+        System.out.print("Enter your name                 : ");
+        name = s.next();
+        System.out.print("Enter your product category     : ");
+        procatname = s.next();
+        System.out.print("Create your password            : ");
+        password = s.next();
+        System.out.print("Enter product name              : ");
+        proname = s.next();
+        System.out.println("Enter product price : ");
+        proprice = s.next();
+        System.out.print("Enter product quantity          : ");
+        quantity = s.next();
+        System.out.print("Enter discount for your product : ");
+        discount = s.next();
+        merapp.add(new Merchantapproval(name,procatname,password,"mer"+ (String.valueOf(mer.size()+1)),proname,"ama00"+String.valueOf(pro.size()+1),proprice,quantity,discount));
+        System.out.println();
+        System.out.println("Your request was successfully submit for admin approval");
+        System.out.println();
+        System.out.println("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        merchantlogin();
+    }
+    static void adminlogin()
+    {
+        clear();
+        System.out.println("              Admin Login");
+        System.out.println();
+        System.out.print("Enter admin name : ");
+        name = s.next();
+        System.out.print("Enter Password : ");
+        password = s.next();
+        if (name.equals("admin") && password.equals("ad"))
+        {
+            adminoptions();
+        }
+        else
+        {
+            System.out.println("Admin name or password is in correct");
+            System.out.println();
+            System.out.print("Press enter to continue");
+            s.nextLine();
+            s.nextLine();
+            clear();
+            mainpage();
+        }
+    }
+    static void adminoptions()
+    {
+        clear();
+        System.out.println("            Welcome Admin");
+        System.out.println();
+        System.out.println("1. Merchant Approval");
+        System.out.println("2. Merchant List");
+        System.out.println("3. Product List");
+        System.out.println("4. Product Category List");
+        System.out.println("5. Add New Product Category");
+        System.out.println("6. Home");
+        System.out.println();
+        System.out.print("Enter your choice : ");
+        choicenumber = s.nextInt();
+        System.out.println();
+        switch (choicenumber)
+        {
+            case 1:
+            {
+                merchantapproval();
+                break;
+            }
+            case 2:
+            {
+                merchantlist();
+                break;
+            }
+            case 3:
+            {
+                productlist();
+                break;
+            }
+            case 4:
+            {
+                productcategorylist();
+                break;
+            }
+            case 5:
+            {
+                addproductcategory();
+                break;
+            }
+            case 6:
+            {
+                mainpage();
+                break;
+            }
+            default :
+            {
+                System.out.println("Invalid input");
+                System.out.println();
+                System.out.print("Press enter to continue");
+                s.nextLine();
+                s.nextLine();
+                clear();
+                adminoptions();
+            }
+        } 
+    }
+    static void merchantlist()
+    {
+        clear ();
+        for (int i = 0 ; i<mer.size() ; i++ )
+        {
+            System.out.println("Merchant name : "+mer.get(i).name);
+            System.out.println("Product category : "+mer.get(i).productcategory);
+            System.out.println();
+        }
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        adminoptions();
+    }
+    static void productlist()
+    {
+        clear();
+        System.out.println("              Product List");
+        System.out.println();
+        for (int i = 0 ; i<pro.size() ; i++)
+        {
+            System.out.println ("Product ID       : " + pro.get(i).productid);
+            for (int j = 0 ; j<mer.size() ;j++)
+            {
+                if ((mer.get(j).merchantid).equals(pro.get(i).merchantid))
+                {
+                    name = mer.get(j).name;
+                    break;
+                }
+            }
+            System.out.println ("Merchant name    : " + name);
+            System.out.println ("Product Category : " + pro.get(i).productcategory);
+            System.out.println ("Product Name     : " + pro.get(i).productname);
+            System.out.println ("Product Price    : " + pro.get(i).productprice);
+            System.out.println ("Product Quantity : " + pro.get(i).quantity);
+            System.out.println ("Product Discount : " + pro.get(i).discount);
+            System.out.println ("Product Sold     : " + pro.get(i).sold);
+            System.out.println ();
+            System.out.println ("-------------------------------------------------------");
+            System.out.println ();
+        }
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        adminoptions();
+    }
+    static void productcategorylist()
+    {
+        clear();
+        for (int i = 0 ; i<procat.size() ; i++)
+        {
+            System.out.println((i+1) + ". " + procat.get(i));
+        }
+        System.out.println ();
+        System.out.println ("-------------------------------------------------------");
+        System.out.println ();
+        System.out.print("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        adminoptions();
+    }
+    static void addproductcategory()
+    {
+        clear();
+        System.out.print("Enter new product category name : ");
+        name = s.next();
+        procat.add(name);
+        System.out.println();
+        System.out.println("New product category added sucessfully");
+        System.out.println();
+        System.out.println("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        adminoptions();
+    }
+    static void merchantapproval()
+    {
+        clear();
+        if (merapp.size() == 0)
+        {
+            System.out.println("No new merchants for approval");
+        }
+        else
+        {
+            //Merchantapproval(String name, String productcategory, String password, String merchantid, String productname, String productid, String quantity, String discount)
+            for (int i = 0 ; i<merapp.size() ; i++)
+            {
+                System.out.println("Merchant name    : " + merapp.get(i).name);
+                System.out.println("Product category : " + merapp.get(i).productcategory);
+                System.out.println("Product Name     : " + merapp.get(i).productname);
+                System.out.println("Press 1 for Approval or 0 for rejection");
+                choicenumber = s.nextInt();
+                if (choicenumber == 1)
+                {
+                    //Merchant(String name,String password,String productcategory, String merchantid)
+                    //(String merchantid, String productcategory, String productid, String productname, String quantity, String discount, String sold)
+                    mer.add(new Merchant(merapp.get(i).name,merapp.get(i).password,merapp.get(i).productcategory,"mer"+ (String.valueOf(mer.size())),merapp.get(i).productname));
+                    pro.add(new Product("mer"+ (String.valueOf(mer.size())),merapp.get(i).productcategory,"ama00"+String.valueOf(pro.size()+1),merapp.get(i).productname,merapp.get(i).productprice,merapp.get(i).quantity,merapp.get(i).discount,"0"));
+                    merapp.remove(i);
+                    merchantapproval();
+                }
+                else
+                {
+                    merapp.remove(i);
+                    merchantapproval();
+                }
+            }
+        }
+        System.out.println();
+        System.out.println("Press enter to continue");
+        s.nextLine();
+        s.nextLine();
+        adminoptions();
     }
     public static void main (String [] ll)
     {
-        us.add(new UserList("sai","1"));
-        us.add(new UserList("raja","2"));
-        us.add(new UserList("pathi","3"));
-        us.add(new UserList("vel","4"));
-        
-        ml.add(new MerchantList("Sai","1","Laotop","12122001"));
-        ml.add(new MerchantList("Flatmaker","2","Laptop","12122009"));
-        ml.add(new MerchantList("Udhayam","3","Ghee","14122003"));
+        mer.add(new Merchant("sai","1234","Phone","mer"+String.valueOf(mer.size()+1),"VIVO"));
+        mer.add(new Merchant("sairanjan","1234","Phone","mer"+String.valueOf(mer.size()+1),"OPPO"));
+        pro.add(new Product("mer1","Phone","ama00"+String.valueOf(pro.size()+1),"VIVO","40000","2","10","0"));
+        pro.add(new Product("mer2","Phone","ama00"+String.valueOf(pro.size()+1),"OPPO","35000","2","10","0"));
+        user.add(new User("raj","12","140000","u00"+String.valueOf(user.size()+1)));
+        user.add(new User("ram","12","140000","u00"+String.valueOf(user.size()+1)));
+        addtocart.add(new Addtocart("vivo","ama001","u001","14000"));
+        orderhistory.add(new OrderHistory("vivo","ama001","u001","14000"));
+        procat.add("Phone");
+        procat.add("Laptop");
+        procat.add("Food");
         mainpage();
     }
 }
